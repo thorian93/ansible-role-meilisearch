@@ -25,8 +25,8 @@ galaxy_info:
         - Buster
     - name: Fedora
       versions:
+        - 31
         - 32
-        - 33
     - name: opensuse
       versions:
         - 15.2

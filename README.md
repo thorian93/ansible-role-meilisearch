@@ -2,9 +2,9 @@
 
 This role installs and configures [MeiliSearch](https://docs.meilisearch.com/) on Debian/Ubuntu, RHEL/CentOS, Fedora and openSUSE servers.
 
-[![Ansible Role: MeiliSearch](https://img.shields.io/ansible/role/REPLACEME?style=flat-square)](https://galaxy.ansible.com/thorian93/ansible_role_meilisearch)
-[![Ansible Role: MeiliSearch](https://img.shields.io/ansible/quality/REPLACEME?style=flat-square)](https://galaxy.ansible.com/thorian93/ansible_role_meilisearch)
-[![Ansible Role: MeiliSearch](https://img.shields.io/ansible/role/d/REPLACEME?style=flat-square)](https://galaxy.ansible.com/thorian93/ansible_role_meilisearch)
+[![Ansible Role: MeiliSearch](https://img.shields.io/ansible/role/54029?style=flat-square)](https://galaxy.ansible.com/thorian93/ansible_role_meilisearch)
+[![Ansible Role: MeiliSearch](https://img.shields.io/ansible/quality/54029?style=flat-square)](https://galaxy.ansible.com/thorian93/ansible_role_meilisearch)
+[![Ansible Role: MeiliSearch](https://img.shields.io/ansible/role/d/54029?style=flat-square)](https://galaxy.ansible.com/thorian93/ansible_role_meilisearch)
 
 ## Here be Dragons!
 
