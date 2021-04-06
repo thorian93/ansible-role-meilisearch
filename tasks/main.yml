@@ -1,0 +1,67 @@
+---
+- name: "Preflight - Fail if target host is not stable for this Role."
+  ansible.builtin.fail:
+    msg: "This role is not stable for the target operating system, {{ ansible_distribution }} {{ ansible_distribution_major_version }}."
+  when: (ansible_distribution is not defined) or
+        (ansible_distribution_version is not defined) or
+        (ansible_distribution+" "+ansible_distribution_major_version not in meilisearch_stable_os)
+
+- name: "Register MeiliSearch Installation Status."
+  stat:
+    path: "{{ meilisearch_exe_path }}"
+  register: meilisearch_status
+
+- name: "Get MeiliSearch Installation Script."
+  ansible.builtin.get_url:
+    url: https://install.meilisearch.com
+    dest: "/tmp/meilisearch.sh"
+    mode: 0750
+    owner: root
+  when: not meilisearch_status.stat.exists | bool
+
+- name: "Run MeiliSearch Installation Script."
+  ansible.builtin.shell: /tmp/meilisearch.sh
+  args:
+    chdir: /tmp
+    warn: 'false'
+  when: not meilisearch_status.stat.exists | bool
+
+- name: "Move MeiliSearch Binary into Place."
+  ansible.builtin.shell: mv /tmp/meilisearch "{{ meilisearch_exe_path }}"
+  args:
+    chdir: /tmp
+    warn: 'false'
+  when: not meilisearch_status.stat.exists | bool
+
+- name: "Ensure Permissions on MeiliSearch Binary."
+  ansible.builtin.file:
+    path: "{{ meilisearch_exe_path }}"
+    mode: 0750
+    owner: root
+    group: root
+
+- name: "Ensure MeiliSearch DB Directory exists."
+  ansible.builtin.file:
+    path: "{{ meilisearch_db_path }}"
+    mode: 0750
+    owner: root
+    group: root
+    state: directory
+
+- name: "Copy MeiliSearch systemd unit file into place."
+  ansible.builtin.template:
+    src: meilisearch.unit.j2
+    dest: /etc/systemd/system/meilisearch.service
+    owner: root
+    group: root
+    mode: 0644
+  when: "ansible_service_mgr == 'systemd'"
+  notify:
+    - systemd daemon-reload
+    - restart meilisearch
+
+- name: "Configure the MeiliSearch Service."
+  ansible.builtin.service:
+    name: meilisearch
+    state: "{{ meilisearch_state }}"
+    enabled: "{{ meilisearch_enabled_at_boot }}"

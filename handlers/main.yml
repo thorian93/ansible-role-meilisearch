@@ -1,0 +1,9 @@
+---
+- name: "systemd daemon-reload"
+  systemd:
+    daemon_reload: yes
+
+- name: "restart meilisearch"
+  ansible.builtin.service:
+    name: meilisearch
+    state: restarted

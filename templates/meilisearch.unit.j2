@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=MeiliSearch - lightning fast search engine
+After=systemd-user-sessions.service
+
+[Service]
+Type=simple
+ExecStart={{ meilisearch_exe_path }} --http-addr {{ meilisearch_listen_ip }}:{{ meilisearch_listen_port }} --db-path {{ meilisearch_db_path }} --master-key {{ meilisearch_master_key }} --env production --no-analytics true --no-sentry true
+
+[Install]
+WantedBy=default.target
