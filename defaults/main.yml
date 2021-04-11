@@ -7,8 +7,8 @@ meilisearch_stable_os:
   - CentOS 8
   - Debian 9
   - Debian 10
-  - Fedora 31
   - Fedora 32
+  - Fedora 33
   - openSUSE Leap 15
   # - openSUSE Leap 42
   - Ubuntu 18
@@ -16,6 +16,9 @@ meilisearch_stable_os:
 
 meilisearch_state: started
 meilisearch_enabled_at_boot: 'true'
+
+meilisearch_user: 'meilisearch'
+meilisearch_group: 'meilisearch'
 
 meilisearch_exe_path: '/usr/bin/meilisearch'
 meilisearch_db_path: '/var/lib/meilisearch'

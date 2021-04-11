@@ -7,9 +7,24 @@
         (ansible_distribution+" "+ansible_distribution_major_version not in meilisearch_stable_os)
 
 - name: "Register MeiliSearch Installation Status."
-  stat:
+  ansible.builtin.stat:
     path: "{{ meilisearch_exe_path }}"
   register: meilisearch_status
+
+- name: "Create Meilisearch Group."
+  ansible.builtin.group:
+    name: "{{ meilisearch_group }}"
+    system: 'yes'
+    state: present
+
+- name: "Create Meilisearch User."
+  ansible.builtin.user:
+    name: "{{ meilisearch_user }}"
+    password_lock: 'yes'
+    groups: "{{ meilisearch_group }}"
+    shell: '/bin/nologin'
+    system: 'yes'
+    state: present
 
 - name: "Get MeiliSearch Installation Script."
   ansible.builtin.get_url:
@@ -37,15 +52,15 @@
   ansible.builtin.file:
     path: "{{ meilisearch_exe_path }}"
     mode: 0750
-    owner: root
-    group: root
+    owner: "{{ meilisearch_user }}"
+    group: "{{ meilisearch_group }}"
 
 - name: "Ensure MeiliSearch DB Directory exists."
   ansible.builtin.file:
     path: "{{ meilisearch_db_path }}"
     mode: 0750
-    owner: root
-    group: root
+    owner: "{{ meilisearch_user }}"
+    group: "{{ meilisearch_group }}"
     state: directory
 
 - name: "Copy MeiliSearch systemd unit file into place."

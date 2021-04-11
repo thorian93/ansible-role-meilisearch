@@ -32,6 +32,11 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Start and enable MeiliSearch at boot.
 
+    meilisearch_user: 'meilisearch'
+    meilisearch_group: 'meilisearch'
+
+Configure the user and group to run meilisearch as. **These will be created, so do not use existing users, as they will be modified!**
+
     meilisearch_exe_path: '/usr/bin/meilisearch'
 
 Configure the path where the binary should be placed.
