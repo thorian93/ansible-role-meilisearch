@@ -1,7 +1,8 @@
 ---
 galaxy_info:
-  author: Thorian93
-  description: Ansible Role MeiliSearch
+  role_name: meilisearch
+  author: thorian93
+  description: Laravel Search Engine
   license: "license (MIT)"
 
   min_ansible_version: 2.9
