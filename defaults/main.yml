@@ -9,6 +9,8 @@ meilisearch_stable_os:
   - Debian 10
   - Fedora 32
   - Fedora 33
+  - Fedora 34
+  - Fedora 35
   - openSUSE Leap 15
   # - openSUSE Leap 42
   - Ubuntu 18
