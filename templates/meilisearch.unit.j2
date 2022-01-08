@@ -8,7 +8,7 @@ After=systemd-user-sessions.service
 Type=simple
 User={{ meilisearch_user }}
 Group={{ meilisearch_group }}
-ExecStart={{ meilisearch_exe_path }} --http-addr {{ meilisearch_listen_ip }}:{{ meilisearch_listen_port }} --db-path {{ meilisearch_db_path }} --master-key {{ meilisearch_master_key }} --env production --no-analytics true --no-sentry true
+ExecStart={{ meilisearch_exe_path }} --http-addr {{ meilisearch_listen_ip }}:{{ meilisearch_listen_port }} --db-path {{ meilisearch_db_path }} --master-key {{ meilisearch_master_key }} --env production --no-analytics true
 
 [Install]
 WantedBy=default.target
