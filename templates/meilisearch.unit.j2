@@ -8,7 +8,11 @@ After=systemd-user-sessions.service
 Type=simple
 User={{ meilisearch_user }}
 Group={{ meilisearch_group }}
-ExecStart={{ meilisearch_exe_path }} --http-addr {{ meilisearch_listen_ip }}:{{ meilisearch_listen_port }} --db-path {{ meilisearch_db_path }} --master-key {{ meilisearch_master_key }} --env production --no-analytics true
+
+# hahn: added - it prevents Error: Permission denied (os error 13)
+WorkingDirectory={{ meilisearch_db_path }}
+
+ExecStart={{ meilisearch_exe_path }} --config-file-path {{ meilisearch_configfile }}
 
 [Install]
 WantedBy=default.target

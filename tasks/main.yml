@@ -38,14 +38,14 @@
   ansible.builtin.shell: /tmp/meilisearch.sh
   args:
     chdir: /tmp
-    warn: 'false'
+    # warn: 'false'
   when: not meilisearch_status.stat.exists | bool
 
 - name: "Move MeiliSearch Binary into Place."
   ansible.builtin.shell: mv /tmp/meilisearch "{{ meilisearch_exe_path }}"
   args:
     chdir: /tmp
-    warn: 'false'
+    # warn: 'false'
   when: not meilisearch_status.stat.exists | bool
 
 - name: "Ensure Permissions on MeiliSearch Binary."
@@ -57,11 +57,26 @@
 
 - name: "Ensure MeiliSearch DB Directory exists."
   ansible.builtin.file:
-    path: "{{ meilisearch_db_path }}"
+    path: "{{ item }}"
     mode: 0750
     owner: "{{ meilisearch_user }}"
     group: "{{ meilisearch_group }}"
     state: directory
+  loop: 
+    - "{{ meilisearch_db_path }}"
+    - "{{ meilisearch_cfg_db_path }}"
+    - "{{ meilisearch_cfg_dump_dir }}"
+    - "{{ meilisearch_cfg_snapshot_dir }}"
+
+- name: "Copy MeiliSearch config file."
+  ansible.builtin.template:
+    src: config.toml.j2
+    dest: "{{ meilisearch_configfile }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart meilisearch
 
 - name: "Copy MeiliSearch systemd unit file into place."
   ansible.builtin.template:
