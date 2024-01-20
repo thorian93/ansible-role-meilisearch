@@ -7,6 +7,7 @@ meilisearch_stable_os:
   - CentOS 8
   - Debian 9
   - Debian 10
+  - Debian 11
   - Fedora 32
   - Fedora 33
   - Fedora 34
@@ -27,3 +28,42 @@ meilisearch_db_path: '/var/lib/meilisearch'
 meilisearch_listen_ip: 127.0.0.1
 meilisearch_listen_port: 7700
 meilisearch_master_key: 'Y0urVery-S3cureAp1K3y'
+
+# use config file instead of visible master key in ps -ef | grep meilisearch
+# base file: https://raw.githubusercontent.com/meilisearch/meilisearch/latest/config.toml
+# All variables are defined here: https://www.meilisearch.com/docs/learn/configuration/instance_options#environment-variables
+# below the config variables prefixed with "meilisearch_cfg_"
+
+meilisearch_configfile: "/etc/meilisearch.toml"
+
+meilisearch_cfg_http_addr: "{{ meilisearch_listen_ip }}:{{ meilisearch_listen_port }}"
+meilisearch_cfg_env: "production"
+meilisearch_cfg_db_path: "{{ meilisearch_db_path }}/data/"
+meilisearch_cfg_no_analytics: "true"
+meilisearch_cfg_http_payload_size_limit: "100 MB"
+meilisearch_cfg_log_level: "INFO"
+meilisearch_cfg_max_indexing_memory: "2 GiB"
+meilisearch_cfg_max_indexing_threads: 4
+
+meilisearch_cfg_dump_dir: "{{ meilisearch_db_path }}/dumps/"
+meilisearch_cfg_import_dump: "./path/to/my/file.dump"
+meilisearch_cfg_ignore_missing_dump: "false"
+
+meilisearch_cfg_ignore_dump_if_db_exists: "false"
+meilisearch_cfg_schedule_snapshot: "false"
+meilisearch_cfg_snapshot_dir: "{{ meilisearch_db_path }}/snapshots/"
+meilisearch_cfg_import_snapshot: "./path/to/my/snapshot"
+meilisearch_cfg_ignore_missing_snapshot: "false"
+meilisearch_cfg_ignore_snapshot_if_db_exists: "false"
+
+meilisearch_use_ssl: false
+meilisearch_cfg_ssl_auth_path: "./path/to/root"
+meilisearch_cfg_ssl_cert_path: "./path/to/certfile"
+meilisearch_cfg_ssl_key_path: "./path/to/private-key"
+meilisearch_cfg_ssl_ocsp_path: "./path/to/ocsp-file"
+meilisearch_cfg_ssl_require_auth: "false"
+meilisearch_cfg_ssl_resumption: "false"
+meilisearch_cfg_ssl_tickets: "false"
+
+meilisearch_cfg_experimental_enable_metrics: "false"
+meilisearch_cfg_experimental_reduce_indexing_memory_usage: "false"
